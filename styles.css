@@ -1,6 +1,7 @@
 body {
     background-color: black;
     text-align: center;
+    overflow: hidden;
 }
 
 h1 {
@@ -12,4 +13,18 @@ h1 {
     background-color: #2a5;
 }
 
-button
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#osmPanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0,0, 0.7);
+    padding: 5000px;
+}

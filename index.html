@@ -18,6 +18,15 @@
     <!--    <button onclick="removeRandomPoint()">Remove Point</button>-->
     <button onclick="dispose()">🗑️</button>
     <button onclick="save()">💾</button>
+    <button onclick="openOsmPanel()">🗺️</button>
+
+    <div id="osmPanel" style="width: 600px;display: none;">
+        <textarea id="osmDataContainer" rows="10" cols="50" placeholder="Paste OSM data here"></textarea>
+        <div>
+            <button onclick="parseOsmData()">✔️</button>
+            <button onclick="closeOsmPanel()">❌</button>
+        </div>
+    </div>
 </div>
 <script src="js/world.js"></script>
 <script src="js/graphEditor.js"></script>
@@ -26,6 +35,7 @@
 <script src="js/items/building.js"></script>
 <script src="js/math/utils.js"></script>
 <script src="js/math/graph.js"></script>
+<script src="js/math/osm.js"></script>
 <script src="js/primitives/point.js"></script>
 <script src="js/primitives/segments.js"></script>
 <script src="js/primitives/polygon.js"></script>
@@ -71,7 +81,7 @@
         graph.draw(ctx);
     }
 
-    myCanvas.width = 600;
+    myCanvas.width = 1200;
     myCanvas.height = 600;
 
     const ctx = myCanvas.getContext('2d');
@@ -114,6 +124,25 @@
 
     function save() {
         localStorage.setItem('graph', JSON.stringify(graph));
+    }
+
+    function openOsmPanel() {
+        osmPanel.style.display = 'block'
+    }
+
+    function closeOsmPanel() {
+        osmPanel.style.display = 'none'
+    }
+
+    function parseOsmData() {
+        if (osmDataContainer.value === '') {
+            alert('Paste data first');
+            return;
+        }
+        const res = Osm.parseRoads(JSON.parse(osmDataContainer.value));
+        graph.points = res.points;
+        graph.segments = res.segments;
+        closeOsmPanel();
     }
 </script>
 </body>
